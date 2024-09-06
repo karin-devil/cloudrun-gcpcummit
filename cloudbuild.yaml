@@ -1,16 +1,16 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'  # Use the official Docker builder image
+- name: 'gcr.io/cloud-builders/docker'  
   args: 
     - 'build'
     - '-t' 
     - 'gcr.io/$PROJECT_ID/my-model'
-    - './model'  # Build the model container, assuming Dockerfile is in the 'model' directory
+    - './model' 
 - name: 'gcr.io/cloud-builders/docker'
   args:
     - 'build'
     - '-t'
     - 'gcr.io/$PROJECT_ID/my-web-server' 
-    - './web-server'  # Build the web server container, assuming Dockerfile is in the 'web-server' directory
+    - './web-server' 
 
 # Add steps to push the images to Google Container Registry and deploy to Cloud Run
 - name: 'gcr.io/cloud-builders/docker'
@@ -24,12 +24,21 @@ steps:
   args: 
   - 'run'
   - 'deploy'
-  - 'my-web-server-service' # Replace with your desired service name
+  - 'my-web-server-service' 
   - '--image=gcr.io/$PROJECT_ID/my-web-server'
   - '--platform=managed'
-  - '--region=us-central1' # Or your preferred region
+  - '--region=us-central1' 
   - '--allow-unauthenticated'
 
 images:
 - 'gcr.io/$PROJECT_ID/my-model'
 - 'gcr.io/$PROJECT_ID/my-web-server'
+
+# Add the following section to handle the service account and logging configuration
+options:
+  # Use the REGIONAL_USER_OWNED_BUCKET option to let Cloud Build create a logs bucket
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET 
+  
+  # Or, if you prefer to specify a specific bucket:
+  # logging: GCS_ONLY
+  # logsBucket: 'gs://your-logs-bucket'  # Replace with the name of your Cloud Storage bucket
