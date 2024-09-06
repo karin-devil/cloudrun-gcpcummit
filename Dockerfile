@@ -2,6 +2,7 @@ FROM python:3.9
 
 RUN pip install diffusers
 RUN pip install torch
+sudo apt-get install libjpeg-dev
 RUN pip install PIL
 
 COPY stable_diffusion_v1_4/config.json /config.json
