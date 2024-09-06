@@ -10,7 +10,7 @@ steps:
     - 'build'
     - '-t'
     - 'gcr.io/$PROJECT_ID/my-web-server' 
-    - './web-server' 
+    - './web-server'
 
 # Add steps to push the images to Google Container Registry and deploy to Cloud Run
 - name: 'gcr.io/cloud-builders/docker'
