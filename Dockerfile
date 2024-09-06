@@ -7,5 +7,6 @@ RUN pip install Pillow
 COPY stable_diffusion_v1_4/config.json /config.json
 COPY stable_diffusion_v1_4/scheduler.json /scheduler.json
 COPY stable_diffusion_v1_4/model.ckpt /model.ckpt
+COPY app.py /app.py
 
-CMD ["python", "-m", "diffusers.pipelines.stable_diffusion.CycleDiffusionPipeline", "--config", "/config.json", "--scheduler", "/scheduler.json", "--model", "/model.ckpt"]
+CMD ["python", "/app.py"]
